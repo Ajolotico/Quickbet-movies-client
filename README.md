@@ -34,3 +34,30 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Instalación
+
+1. Clona el repositorio en tu máquina local:
+
+git clone https://github.com/Ajolotico/Quickbet-movies-client.git
+
+2. Navega al directorio del proyecto:
+
+cd Quickbet-movies/client
+
+3. Instala las dependencias necesarias:
+
+npm install
+
+## Ejecución
+
+1. Para ejecutar el cliente del proyecto en modo de desarrollo, usa el siguiente comando en la ruta /client:
+
+npm run dev
+
+Esto levantará el cliete en http://localhost:3000.
+
+Para ejecutar el proyecto en modo de producción, primero debes compilarlo y luego iniciarlo:
+
+npm run build
+npm start
