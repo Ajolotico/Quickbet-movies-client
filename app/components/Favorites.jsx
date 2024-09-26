@@ -33,17 +33,6 @@ export default function Favorites({
         if (!token) {
           throw new Error("No token found");
         }
-
-        const decodedToken = jwtDecode(token);
-        console.log("Decoded token:", decodedToken); // For debugging
-
-        // Asume que el userId está en el claim 'sub' o 'id'
-        const userId = decodedToken.sub || decodedToken.id;
-
-        if (!userId) {
-          throw new Error("No user ID found in token");
-        }
-
         const movies = await fetchFavoriteMovies();
         setFavoriteMovies(movies);
       } catch (err) {
