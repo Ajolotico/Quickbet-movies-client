@@ -8,7 +8,7 @@ import Image from "next/image";
 import Login from "./Login";
 import { createPortal } from "react-dom";
 
-export default function Navbar() {
+export default function Navbar({ onAuthChange }) {
   const [showLogin, setShowLogin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -16,7 +16,8 @@ export default function Navbar() {
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     setIsLoggedIn(!!token);
-  }, []);
+    onAuthChange(!!token);
+  }, [onAuthChange]);
 
   const toggleLogin = () => {
     setShowLogin(!showLogin);
@@ -26,10 +27,11 @@ export default function Navbar() {
     localStorage.setItem("authToken", token);
     setIsLoggedIn(true);
     setShowLogin(false);
+    onAuthChange(true);
   };
 
   const handleLogout = async () => {
-    if (isLoggingOut) return; // Prevenir múltiples clics durante el proceso de logout
+    if (isLoggingOut) return;
 
     setIsLoggingOut(true);
     try {
@@ -45,13 +47,11 @@ export default function Navbar() {
         throw new Error("Logout failed");
       }
 
-      // Logout exitoso
       localStorage.removeItem("authToken");
       setIsLoggedIn(false);
-      console.log("Logout successful");
+      onAuthChange(false);
     } catch (error) {
       console.error("Error during logout:", error);
-      // Opcional: Mostrar un mensaje de error al usuario
     } finally {
       setIsLoggingOut(false);
     }

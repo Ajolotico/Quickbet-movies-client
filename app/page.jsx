@@ -26,6 +26,26 @@ export default function Home() {
   const [topMovie, setTopMovie] = useState(null);
   const [searchResults, setSearchResults] = useState([]);
   const [selectedGenre, setSelectedGenre] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    async function loadTopMovie() {
+      const movie = await fetchMovie();
+      if (movie) {
+        setTopMovie(movie);
+      }
+    }
+    loadTopMovie();
+
+    const token = localStorage.getItem("authToken");
+    setIsLoggedIn(!!token);
+    console.log("Initial auth state:", !!token);
+  }, []);
+
+  const handleAuthChange = useCallback((loggedIn) => {
+    setIsLoggedIn(loggedIn);
+    console.log("logged in?", loggedIn);
+  }, []);
 
   useEffect(() => {
     async function loadTopMovie() {
@@ -66,7 +86,7 @@ export default function Home() {
   return (
     <div className="text-white">
       <main>
-        <Navbar />
+        <Navbar onAuthChange={handleAuthChange} />
         {topMovie && (
           <MainImage
             imageUrl={`https://image.tmdb.org/t/p/original${topMovie.backdrop_path}`}
@@ -89,6 +109,7 @@ export default function Home() {
             handlerFavoriteClick={() => null}
             handlerMovieClick={() => null}
             selectedGenre={selectedGenre}
+            isLogged={isLoggedIn}
           />
         </div>
       </main>
